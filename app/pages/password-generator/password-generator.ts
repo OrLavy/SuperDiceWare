@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ActionSheetController } from 'ionic-angular';
 
 /*
   Generated class for the PasswordGeneratorPage page.
@@ -11,9 +11,42 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'build/pages/password-generator/password-generator.html',
 })
 export class PasswordGeneratorPage {
+  generatedPasswords : Array<String> = ["No passwords generated yet"];
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController, public actionSheetCtrl : ActionSheetController) {
 
   }
 
+  performBasicGeneration(){
+    console.log("DEV :: Basic random")
+  }
+
+  performPhotoBasedGeneration(){
+    console.log("DEV :: Picture seed")
+  }
+
+  /**
+   * creates and shows the action sheet
+   */
+  presentGenerationSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title : 'Choose generation method',
+      buttons : [
+        {
+          text : 'Basic Pseudo-random',
+          handler : this.performBasicGeneration
+        },
+        {
+          text : 'Picture based seed',
+          handler : this.performPhotoBasedGeneration
+        },
+        {
+          text : 'Cancel',
+          role : 'cancel'
+        }
+      ]
+    });
+
+    actionSheet.present();
+  }
 }
